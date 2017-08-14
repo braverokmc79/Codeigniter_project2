@@ -24,4 +24,29 @@ class Main extends CI_Controller {
 	}
 
 
+	function view()
+	{
+		//todo 번호에 해당하는 데이터 가져오기
+		$id=$this->uri->segment(3);
+
+		$data['views']= $this->todo_m->get_view($id);
+
+		//view 호출
+		$this->load->view('todo/view_v', $data);
+	}
+
+
+	function write()
+	{
+		if($_POST)
+		{
+			//글쓰기 POST 전송 시
+			$content =$this->input->post('content', TRUE);
+
+		}
+
+	}
+
+
+
 }

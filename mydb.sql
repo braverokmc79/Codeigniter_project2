@@ -6,3 +6,12 @@ create table ITEMS (
 	`use` int(1) not null default '1'
 ) COLLATE ='utf8_general_ci' ENGINE =MyISAM;
 
+
+insert into braverokmc.items ( content, create_on, due_date) 
+
+values ('웅파미팅', '2012-09-23', '2012-09-24');
+
+
+insert into braverokmc.items ( content, create_on, due_date) 
+
+values ('스터디', '2012-09-23', '2012-09-24');
