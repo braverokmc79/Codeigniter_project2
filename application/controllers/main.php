@@ -42,9 +42,18 @@ class Main extends CI_Controller {
 		{
 			//글쓰기 POST 전송 시
 			$content =$this->input->post('content', TRUE);
+			$create_on =$this->input->post('create_on',TRUE);
+			$due_date=$this->input->post('due_date', TRUE);
 
+			$this->todo_m->insert_todo($content, $create_on, $due_date);
+
+			redirect('/main/lists/');
+			exit;
+		}else
+		{
+			//쓰기 폼 view 호출
+			$this->load->view('todo/write_v');
 		}
-
 	}
 
 

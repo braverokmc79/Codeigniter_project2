@@ -27,11 +27,10 @@ class Todo_m extends CI_Model
 		return $result;
 	}
 
-
+	/*뷰*/
 	function get_view($id)
 	{
-		$sql =" SELECT * FROM ITEMS where id=$id" ;
-
+		$sql =" SELECT * FROM ITEMS where id= '".$this->db->escape_str($id)."'" ;
 
 		$query =$this->db->query($sql);
 
@@ -41,6 +40,15 @@ class Todo_m extends CI_Model
 		return $result;
 	}
 
+	/*쓰기 폼 view 호출*/
+	function insert_todo($content, $create_on, $due_date)
+	{
+		$sql =" insert into ITEMS (content, create_on, due_date ) values ( ?, ?, ? ) ";
+		
+		$query=$this->db->query($sql, array($content, $create_on, $due_date));
+
+		
+	}
 
 
 }
