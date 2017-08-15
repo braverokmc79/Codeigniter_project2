@@ -1,3 +1,4 @@
+
 <article id="board_area">
 	<header>
 		<h1></h1>
@@ -36,5 +37,12 @@
 	?>
 		</tbody>
 
+
+			<tfoot>
+				<tr>
+					
+				 <th colspan="5"><?php echo $pagination;?></th>
+				</tr>			
+			</tfoot>
 	</table>
 </article>

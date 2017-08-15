@@ -71,7 +71,8 @@
 
 			<tfoot>
 				<tr>
-				 <th colspan="4"><a href="/todo/index.php/main/write/" class="btn btn-success">쓰기</a></th>
+				
+				 
 				</tr>			
 			</tfoot>
 	</table>
