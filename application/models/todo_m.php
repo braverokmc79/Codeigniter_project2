@@ -51,5 +51,14 @@ class Todo_m extends CI_Model
 	}
 
 
+	//삭제
+	function delete_todo($id)
+	{
+		$sql =" delete from ITEMS where id = ?";
+		$this->db->query($sql, array($id));
+
+	}
+
+
 }
 

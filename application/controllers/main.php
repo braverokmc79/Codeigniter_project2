@@ -57,5 +57,23 @@ class Main extends CI_Controller {
 	}
 
 
+	function delete()
+	{
+		//게시물 번호에 해당하는 게시물 삭제
+		$id =$this->uri->segment(3);
+
+		$this->todo_m->delete_todo($id);
+
+		redirect("/main/lists/");
+		
+	}
+
 
 }
+
+
+
+
+
+
+
