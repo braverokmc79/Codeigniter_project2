@@ -57,7 +57,7 @@ class Main extends CI_Controller {
 	}
 
 
-	function delete()
+	public function delete()
 	{
 		//게시물 번호에 해당하는 게시물 삭제
 		$id =$this->uri->segment(3);
