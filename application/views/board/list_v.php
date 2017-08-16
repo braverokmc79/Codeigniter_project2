@@ -23,7 +23,9 @@
 				<?php echo $lt->board_id; ?>
 			</th>
 			<td>
-	<a rel="external" href="/todo/<?php echo $this->uri->segment(1);?>/view/<?php  echo $lt->board_id; ?>" >
+	<a rel="external" 
+	href="/todo/<?php echo $this->uri->segment(1);?>/view/<?php  echo $lt->board_id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>/<?php echo $this->uri->segment(5);?>" >
+
 			<?php echo $lt->subject; ?></a></td>
 			<td><?php echo  $lt->user_name; ?></td>
 			<td><?php echo $lt->hits; ?></td>

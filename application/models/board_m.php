@@ -100,6 +100,28 @@ class Board_m extends CI_Model
 		return $result;
 	}
 
+/*
+	게시물 수정
+
+	*/
+	function modify_board($arrays)
+	{
+		$modify_array=array(
+				'subject'=>$arrays['subject'],
+				'contents'=>$arrays['contents']
+			);
+
+		$where=array(
+				'board_id'=>$arrays['board_id']
+			);
+
+		$result=$this->db->update($arrays['table'], $modify_array, $where);
+
+		//결과 반환
+		return $result;
+	}
+
+
 
 }
 

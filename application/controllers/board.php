@@ -235,7 +235,7 @@ class Board extends CI_Controller {
 				*/
 
 
-			if(!$this->input->post('subject', TRUE) AND !$this->input->post('contents', TRUE))
+			if(!$this->input->post('subject', TRUE) OR !$this->input->post('contents', TRUE))
 			{
 				//글 내용이 없을 경우, 프로그램단에서 한 번 더 체크
 				
@@ -271,6 +271,84 @@ class Board extends CI_Controller {
 			$this->load->view('board/write_v');
 		}
 	}
+
+
+	/*
+		게시물 수정
+	*/
+	 function modify()
+	 {
+	 	//경고창 헬퍼 로딩
+	 	$this->load->helper('alert');
+	 	echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+
+	 	if($_POST)
+	 	{
+	 		//글 수정 POST 전송 시
+	 		
+	 		//주소 중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
+	 		$pages=1;
+	 		if(!is_null($this->uri->segment(7) ))
+	 		{
+			
+		 		$uri_array=$this->segment_explode($this->uri->uri_string());
+
+		 		if(in_array('page', $uri_array))
+		 		{
+		 			$pages=urldecode($this->url_explode($uri_array, 'page'));
+		 		}
+		 		
+
+	 		}
+
+	 		if(!$this->input->post('subject', TRUE) OR !$this->input->post('contents', TRUE))
+	 		{
+	 			//글 내용이 없을 경우, 프로그램단에서 한 번 더 체크
+	 			alert('비정상적인 접근입니다.', '/todo/board/view/'.$this->uri->segment(3));
+				exit;	
+	 		}
+
+	 		//var_dumbp($_POST)
+	 		$modify_data=array(
+	 				'table' =>'ci_board',
+	 				'board_id'=>$this->uri->segment(4), //게시물 번호
+	 				'subject' =>$this->input->post('subject', TRUE),
+	 				'contents' =>$this->input->post('contents', TRUE)
+	 		);
+
+/*	 		foreach ($modify_data as $key => $value) {
+	 			echo $value;	# code...
+	 		};
+	 		
+	 		exit;*/
+
+	 		$result=$this->board_m->modify_board($modify_data);
+
+	 		if($result)
+	 		{
+
+	 			//글 작성 성공 시 게시물 목록으로
+	 			alert('수정되 었습니다.', '/todo/board/lists/ci_board/page/'.$pages);
+				exit;	
+	 		}
+	 		else
+	 		{
+	 			//글 수정 실패 시 글 내용으로
+	 			alert('다시 수정 해 주세요.', '/todo/board/lists/ci_board/page/'.$pages);
+				exit;	
+	 		}
+
+	 	}else{
+
+			// GET 방식일 경우 게시물 내용 가져 오기
+	 		$data['views']=$this->board_m->get_view($this->uri->segment(4));
+
+	 		//쓰기 폼 view 호출
+	 		$this->load->view('board/modify_v', $data);
+	 	}
+	 }
+
+
 
 
 }
