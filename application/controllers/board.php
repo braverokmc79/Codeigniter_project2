@@ -96,6 +96,8 @@ class Board extends CI_Controller {
 	}
 
 
+
+
 	function pageConfig($page_url, $search_word)
 	{
 
@@ -177,7 +179,19 @@ class Board extends CI_Controller {
 
 	}
 
+	/*
+		게시물 보기
 
+	*/
+	function view()
+	{
+		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
+		$data['views']=$this->board_m->get_view($this->uri->segment(3));
+		
+		//echo "Dfef".$this->uri->segment(3);
+		//view 호출
+		$this->load->view('board/view_v', $data);
+	}
 }
 
 

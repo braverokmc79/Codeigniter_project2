@@ -61,9 +61,35 @@ class Board_m extends CI_Model
 	}
 
 
+	/*
+		게시물 상세보기 가져오기
+	 */
+	
+	function get_view($id)
+	{
+		$table="ci_board";
+
+		//조횟수 증가
+		$sql0="UPDATE ".$table." set hits = hits+1  where board_id =? ";
+		$this->db->query($sql0, array($id));
+
+		$sql=" Select * from ".$table." where board_id = ? ";
+		$query=$this->db->query($sql, array($id));
+
+		//게시물 내용 반환
+		$result =$query->row();
+		return $result;
+	}
 
 
 
 
 }
+
+
+
+
+
+
+
 
