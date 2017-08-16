@@ -45,4 +45,13 @@
 				</tr>			
 			</tfoot>
 	</table>
+
+
+	<form id="bd_search" method="post">
+	  <input type="text" name="search_word" id="q" onkeypress="board_search_enter(document.q);" />
+	  <input type="button" value="검색" id="search_btn" />
+
+	</form>
+
+
 </article>

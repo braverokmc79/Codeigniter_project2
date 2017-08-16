@@ -16,14 +16,32 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
-
-
 	<!--[if lt IE 9]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
+<script type="text/javascript">
 
+$(document).ready(function(){
+	$("#search_btn").click(function(){
+		if($("#q").val()==''){
+			alert('검색어를 입력하세요');
+			return false;
+		}else{
+			var act ='/todo/board/lists/ci_board/q/'+$("#q").val()+'/page/1';
+			$("#bd_search").attr('action', act).submit();
+		}
+	});
+
+});
+
+function board_search_enter(form){
+	var keycode=window.event.keyCode;
+	if(keycode ==13) $("#search_btn").click();
+}
+
+</script>
 
 
 </head>
