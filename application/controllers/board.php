@@ -286,20 +286,9 @@ class Board extends CI_Controller {
 	 	{
 	 		//글 수정 POST 전송 시
 	 		
-	 		//주소 중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
-	 		$pages=1;
-	 		if(!is_null($this->uri->segment(7) ))
-	 		{
-			
-		 		$uri_array=$this->segment_explode($this->uri->uri_string());
+	 		//현재 url 페이지 번호 가져오기
+	 		$pages=$this->_pageNumber();
 
-		 		if(in_array('page', $uri_array))
-		 		{
-		 			$pages=urldecode($this->url_explode($uri_array, 'page'));
-		 		}
-		 		
-
-	 		}
 
 	 		if(!$this->input->post('subject', TRUE) OR !$this->input->post('contents', TRUE))
 	 		{
@@ -326,7 +315,6 @@ class Board extends CI_Controller {
 
 	 		if($result)
 	 		{
-
 	 			//글 작성 성공 시 게시물 목록으로
 	 			alert('수정되 었습니다.', '/todo/board/lists/ci_board/page/'.$pages);
 				exit;	
@@ -349,6 +337,57 @@ class Board extends CI_Controller {
 	 }
 
 
+
+	 //페이지 번호 가져오기
+	 function _pageNumber()
+	 {
+	 		 		//주소 중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
+	 		$pages=1;
+	 		if(!is_null($this->uri->segment(7) ))
+	 		{
+			
+		 		$uri_array=$this->segment_explode($this->uri->uri_string());
+
+		 		if(in_array('page', $uri_array))
+		 		{
+		 			$pages=urldecode($this->url_explode($uri_array, 'page'));
+		 		}
+		 		
+
+	 		}
+	 		return $pages;
+	 }
+
+/*
+	 게시물 삭제
+
+	 */
+	function delete()
+	{
+		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' ;
+
+		//경고창 헬퍼 로딩
+		$this->load->helper('alert');
+
+		//게시물 번호에 해당하는 게시물 삭제
+		$return=$this->board_m->delete_content('ci_board',$this->uri->segment(4));
+
+		$pages=$this->_pageNumber();
+		//게시물 목록으로 돌아가기
+		if($return)
+		{
+			//삭제가 성공한 경우
+			alert('삭제 되었습니다.', '/todo/board/lists/ci_board/page/'.$pages);
+			exit;	
+		}	
+		else
+		{
+			//삭제가 실패한 경우
+			alert('삭제 실패하였습니다.', '/todo/board/lists/ci_board/page/'.$pages);
+			exit;	
+
+		}
+	}
 
 
 }

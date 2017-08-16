@@ -122,6 +122,16 @@ class Board_m extends CI_Model
 	}
 
 
+	//게시물 삭제
+	function delete_content($table, $no)
+	{
+		$delete_array=array(
+			'board_id' =>$no
+		);
+		$result =$this->db->delete($table, $delete_array);
+		//결과 반환
+		return $result;
+	}
 
 }
 
