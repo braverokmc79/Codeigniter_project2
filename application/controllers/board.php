@@ -112,7 +112,11 @@ class Board extends CI_Controller {
 
 		//페이지 번호
 		$config['num_links']=2;
-				
+		
+		$config['first_link']='처음';
+		$config['last_link']='마지막';
+
+
 		//페이지 전체
 		$config['full_tag_open']='<ul class="pagination">';
 		$config['full_tag_close']='</ul>';
@@ -147,36 +151,47 @@ class Board extends CI_Controller {
 
 
 
-	//q 다음 검색어가 있을 경우 검색어를  가져온다. 
+	/**
+	 * url중 키값을 구분하여 값을 가져오도록.
+	 *
+	 * @param Array $url : segment_explode 한 url값
+	 * @param String $key : 가져오려는 값의 key
+	 * @return String $url[$k] : 리턴값
+	 */
 	function url_explode($url, $key)
 	{
-		$cnt =count($url);
-		for($i=0; $i<$cnt; $i++)
+		$cnt = count($url);
+		for($i=0; $cnt>$i; $i++ )
 		{
-			if($url[$i] == $key)
+			if($url[$i] ==$key)
 			{
-				$k=$i+1;
+				$k = $i+1;
 				return $url[$k];
 			}
 		}
 	}
 
+	/**
+	 * HTTP의 URL을 "/"를 Delimiter로 사용하여 배열로 바꾸어 리턴한다.
+	 *
+	 * @param	string	대상이 되는 문자열
+	 * @return	string[]
+	 */
 	function segment_explode($seg)
 	{
-		//세그먼트 앞뒤 '/' 제거 후 uri 를 배열로 반환
-		$len =strlen($seg);
-		if(substr($seg, 0, 1)=='/')
+		//세크먼트 앞뒤 '/' 제거후 uri를 배열로 반환
+		$len = strlen($seg);
+		if(substr($seg, 0, 1) == '/')
 		{
-			$seg=substr($seg, 1, $len);
-		}	
-		$len =strlen($seg);
-		if(substr($seg, -1)=='/')
-		{
-			$seg=substr($seg, 0, $len-1);
+			$seg = substr($seg, 1, $len);
 		}
-		$seg_exp=explode("/", $seg);
-		return$seg_exp;
-
+		$len = strlen($seg);
+		if(substr($seg, -1) == '/')
+		{
+			$seg = substr($seg, 0, $len-1);
+		}
+		$seg_exp = explode("/", $seg);
+		return $seg_exp;
 	}
 
 	/*
@@ -187,12 +202,81 @@ class Board extends CI_Controller {
 	{
 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
 		$data['views']=$this->board_m->get_view($this->uri->segment(3));
-		
-		//echo "Dfef".$this->uri->segment(3);
 		//view 호출
 		$this->load->view('board/view_v', $data);
 	}
+
+
+	/*
+		게시물 쓰기
+	*/
+
+	function write()
+	{
+			//경고창 헬퍼 로딩
+		$this->load->helper('alert');
+		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+	
+		if($_POST)
+		{
+			
+
+				//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
+/*				$uri_array = $this->segment_explode($this->uri->uri_string());
+
+				if( in_array('page', $uri_array) )
+				{
+					$pages = urldecode($this->url_explode($uri_array, 'page'));
+				}
+				else
+				{
+					$pages = 1;
+				}
+				*/
+
+
+			if(!$this->input->post('subject', TRUE) AND !$this->input->post('contents', TRUE))
+			{
+				//글 내용이 없을 경우, 프로그램단에서 한 번 더 체크
+				
+				alert('비정상적인 접근입니다.', '/todo/board/view/'.$this->uri->segment(3));
+				exit;
+			}
+
+			$write_data=array(
+
+					'subject'=>$this->input->post('subject', TRUE),
+					'contents'=>$this->input->post('contents', TRUE),
+					'table' =>'ci_board'
+			);
+
+			$result =$this->board_m->insert_board($write_data);
+
+			if($result)
+			{
+				//글 작성 성공시 게시판 목록으로
+				alert('입력되었습니다.', '/todo/board/lists/');
+				exit;
+			}
+			else
+			{
+				//글 실패 시 게시물 목록으로 
+				alert('다시 입력해 주세요.', '/todo/board/lists/');
+				exit;
+			}
+		}
+		else
+		{
+			//쓰기 폼 view 호출
+			$this->load->view('board/write_v');
+		}
+	}
+
+
 }
+
+
+
 
 
 
