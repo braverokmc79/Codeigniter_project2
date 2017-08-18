@@ -213,7 +213,15 @@ class Board extends CI_Controller {
 
 	function write()
 	{
-			//경고창 헬퍼 로딩
+		//폼 검증 라이브러리 로드
+		$this->load->library('form_validation');
+
+		// 폼 검증할 필드와 규칙 사전 정의
+		$this->form_validation->set_rules('subject', '제목', 'required|xss_clean');
+		$this->form_validation->set_rules('contents', '내용', 'required');
+
+
+		//경고창 헬퍼 로딩
 		$this->load->helper('alert');
 		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 	
