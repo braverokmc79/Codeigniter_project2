@@ -9,18 +9,25 @@
 			<div class="control-group">
 				<label class="controls-label" for="input01">제목</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge" id="input01" name="subject">
+					<input type="text" class="input-xlarge" id="input01" name="subject"
+						value="<?php echo set_value('subject'); ?>" >
 					<p>게시물의 제목을 써주세요.</p>
 				</div>
 		
 				
 			<label class="controls-label" for="input02">내용</label>
 				<div class="controls">
-			<textarea class="input-xlarge" id="input02" name="contents" rows="5"></textarea>
+			<textarea class="input-xlarge" id="input02" name="contents" rows="5"><?php echo set_value('contents') ;?></textarea>
 			
 			<p class="help-block">게시물의 내용을 써주세요.</p>
 			</div>
 			
+
+		<div>
+			<p class="help-block"><?php echo validation_errors();?></p>
+		</div>
+
+
 			<div class="form-actions">
 				<button type="button" class="btn btn-primary" id="write_btn">작성</button>
 				<button class="btn"  onclick="document.location.reload()">취소</button>
