@@ -53,18 +53,34 @@ class Test extends CI_Controller{
 			$this->form_validation->set_rules('password', '비밀번호', 'trim|required|matches[passconf]|md5|htmlspecialchars');
 			$this->form_validation->set_rules('email', '이메일', 'trim|required|valid_email|htmlspecialchars');
 
+			//numeric 검사 대상이 숫자 이외의 문자를 포함할 때 FALSE 를 리턴합니다.
+			$this->form_validation->set_rules('count', '기본 값', 'numeric');
+			$this->form_validation->set_rules('myselect', '셀렉트값', '');
+			$this->form_validation->set_rules('mycheck[]', '체크박스', '');
+			$this->form_validation->set_rules('myradio', '라디오버튼' , '');
+
+
 			if($this->form_validation->run() ==FALSE)
 			{
-				//폼 검증이 실패했을 경우 또는 일반 입력 페이지
-				echo $this->input->post("password", TRUE);
-				echo "<br>";
-				echo $this->input->post("passconf", TRUE);
+				
 				$this->load->view('test/forms_v');	
 			}
 			else
 			{
+				//폼 검증이 실패했을 경우 또는 일반 입력 페이지
+				$data['test'] = array(
+					'username'=>$this->input->post('username', TRUE),
+					'password'=> $this->input->post("password", TRUE),
+					'passconf'=>$this->input->post("passconf", TRUE),
+					'email'=>$this->input->post('email', TRUE),
+					'count'=>$this->input->post('count', TRUE),
+					'myselect'=>$this->input->post('myselect', TRUE),
+					'mycheck'=>$this->input->post('mycheck[]', TRUE),
+					'myradio'=>$this->input->post('myradio', TRUE)
+
+				);
 				//폼 검증이 성공했을 때 보여줄 페이지
-				$this->load->view('test/form_success_v');
+				$this->load->view('test/form_success_v', $data);
 			}
 		
 
