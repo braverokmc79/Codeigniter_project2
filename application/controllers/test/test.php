@@ -48,7 +48,7 @@ class Test extends CI_Controller{
 
 
 			//폼 검증할 필드와 규칙 사전 정의
-			$this->form_validation->set_rules('username', '아이디', 'trim|required|min_length[5]|max_length[12]|htmlspecialchars');
+			$this->form_validation->set_rules('username', '아이디', 'trim|required|min_length[5]|max_length[12]|htmlspecialchars|callback_username_check');
 			$this->form_validation->set_rules('passconf', '비밀번호 확인', 'trim|required|md5|htmlspecialchars');
 			$this->form_validation->set_rules('password', '비밀번호', 'trim|required|matches[passconf]|md5|htmlspecialchars');
 			$this->form_validation->set_rules('email', '이메일', 'trim|required|valid_email|htmlspecialchars');
@@ -87,4 +87,37 @@ class Test extends CI_Controller{
 	}
 
 
+ 	public function username_check($id)
+ 	{
+ 		$this->load->database();
+ 		
+ 		if($id)	
+ 		{
+ 			$result=array();
+ 			$sql="SELECT id FROM USERS WHERE username = '".$id."'";
+ 			$query=$this->db->query($sql);
+ 			$result=@$query->row();
+
+ 			if($result)
+ 			{
+ 				$this->form_validation->set_message('username_check', $id.'은(는) 중복된 아이디 입니다.');
+ 				return FALSE;
+ 			}
+ 			else
+ 			{
+ 				return TRUE;
+ 			}
+ 		}
+ 		else
+ 		{
+ 			return FALSE;
+ 		}
+ 	}
+
+
+
 }
+
+
+
+

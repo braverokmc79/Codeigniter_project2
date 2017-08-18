@@ -55,3 +55,19 @@ INSERT INTO `ci_board` (`board_id`, `board_pid`, `user_id`, `user_name`, `subjec
 show tables;
 
 desc ci_board;
+
+CREATE TABLE USERS(
+	id int(10) AUTO_INCREMENT PRIMARY KEY UNIQUE  ,
+	username VARCHAR(50) null COMMENT '아이디',
+	password VARCHAR(50) null COMMENT '비밀번호',
+	name VARCHAR (50) null COMMENT '이름',
+	email VARCHAR (50) null COMMENT '이메일',
+	reg_date DATETIME null COMMENT '가입일'
+) COMMENT ='회원테이블'
+	COLLATE ='utf8_general_ci'
+	ENGINE =MyISAM
+	ROW_FORMAT =DEFAULT ;
+	
+INSERT INTO USERS ( username, password, name, email, reg_date) 
+
+	VALUES ('braverokmc', '1111', '마카로닉스', 'braverokmc@gmail.com' , '2017-08-18 20:55:55'	);
