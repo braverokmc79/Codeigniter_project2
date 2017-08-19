@@ -71,3 +71,20 @@ CREATE TABLE USERS(
 INSERT INTO USERS ( username, password, name, email, reg_date) 
 
 	VALUES ('braverokmc', '1111', '마카로닉스', 'braverokmc@gmail.com' , '2017-08-18 20:55:55'	);
+
+
+
+-- 테이블 ci_book의 구조를 덤프합니다. ci_sessions
+DROP TABLE IF EXISTS `ci_sessions`;
+CREATE TABLE IF NOT EXISTS `ci_sessions` (
+  `id` varchar(200) not null default '0',
+  `session_id` BIGINT AUTO_INCREMENT ,
+  `ip_address` varchar(16) NOT NULL DEFAULT '0',
+  `user_agent` varchar(120) NOT NULL,
+  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_data` text NOT NULL,
+  `timestamp` TIMESTAMP ,
+  `data` TEXT,
+  PRIMARY KEY (`session_id`),
+  KEY `last_activity_idx` (`last_activity`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

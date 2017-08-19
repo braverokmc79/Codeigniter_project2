@@ -59,6 +59,24 @@ function board_search_enter(form){
 	<nav id="gnb"><!-- gnb Start -->
 		<ul>
 			<li><a rel="external" href="/todo/<?php $this->uri->segment(1); ?>/lists/<?php echo  $this->uri->segment(3); ?>" >게시판 프로젝트</a></li>
+			<li>&nbsp;</li>
+
+<?php
+  if(@$this->session->userdata('logged_in')==TRUE)
+  {
+ ?>
+
+ <?php echo $this->session->userdata('username')	?> 님 환영합니다. 
+ <a href="/todo/auth/logout"  class="btn">로그아웃</a>
+
+
+<?php
+}else {
+?>
+		<a href="/todo/auth/" class="btn btn-danger">로그인</a>
+<?php  } ?>
+
+
 		</ul>
 	</nav><!-- gnb End -->
 		
