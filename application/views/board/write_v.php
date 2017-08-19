@@ -3,7 +3,14 @@
 		<h1></h1>
 	</header>
 	
-	<form class="form-horizontal" method="post" action="" id="write_action">
+<!-- 	<form class="form-horizontal" method="post" action="" id="write_action">
+ -->
+	<?php
+		$attributes =array('class' => 'form-horizontal', 'id' =>'write_action');
+		echo form_open('board/write/ci_board', $attributes);
+
+	?>
+
 		<fieldset>
 			<legend>게시물 쓰기</legend>		
 			<div class="control-group">

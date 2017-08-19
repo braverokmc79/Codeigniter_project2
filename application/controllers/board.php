@@ -11,7 +11,8 @@ class Board extends CI_Controller {
 		parent::__construct();
 		//$this->load->database();
 		$this->load->model('board_m');
-		$this->load->helper(array('url', 'date'));
+		$this->load->helper(array('url', 'date', 'form'));
+
 	}
 
 
