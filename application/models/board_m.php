@@ -133,6 +133,16 @@ class Board_m extends CI_Model
 		return $result;
 	}
 
+
+
+	function writer_check()
+	{
+		$sql=" select user_id from CI_BOARD where board_id = ?" ;
+		$query=$this->db->query($sql, array('board_id'=>$this->uri->segment(4)));
+		return $query->row();
+
+	}
+
 }
 
 

@@ -303,58 +303,89 @@ class Board extends CI_Controller {
 	 	$this->load->helper('alert');
 	 	echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 
-	 	if($_POST)
-	 	{
-	 		//글 수정 POST 전송 시
-	 		
-	 		//현재 url 페이지 번호 가져오기
-	 		$pages=$this->_pageNumber();
+		//현재 url 페이지 번호 가져오기
+	 	$pages=$this->_pageNumber();
 
 
-	 		if(!$this->input->post('subject', TRUE) OR !$this->input->post('contents', TRUE))
-	 		{
-	 			//글 내용이 없을 경우, 프로그램단에서 한 번 더 체크
-	 			alert('비정상적인 접근입니다.', '/todo/board/view/'.$this->uri->segment(3));
-				exit;	
-	 		}
+		if(@$this->session->userdata('logged_in')==TRUE)
+		{
+			//수정하려는 글의 작성자가 본인인지 검증
+			$writer_id=$this->board_m->writer_check();
 
-	 		//var_dumbp($_POST)
-	 		$modify_data=array(
-	 				'table' =>'ci_board',
-	 				'board_id'=>$this->uri->segment(4), //게시물 번호
-	 				'subject' =>$this->input->post('subject', TRUE),
-	 				'contents' =>$this->input->post('contents', TRUE)
-	 		);
+			if($writer_id->user_id != $this->session->userdata('username'))
+			{
 
-/*	 		foreach ($modify_data as $key => $value) {
-	 			echo $value;	# code...
-	 		};
-	 		
-	 		exit;*/
+				alert('본인이 작성한 글이 아닙니다.', '/todo/board/lists/ci_board/page/'.$pages);
+				exit;
+			}
 
-	 		$result=$this->board_m->modify_board($modify_data);
 
-	 		if($result)
-	 		{
-	 			//글 작성 성공 시 게시물 목록으로
-	 			alert('수정되 었습니다.', '/todo/board/lists/ci_board/page/'.$pages);
-				exit;	
-	 		}
-	 		else
-	 		{
-	 			//글 수정 실패 시 글 내용으로
-	 			alert('다시 수정 해 주세요.', '/todo/board/lists/ci_board/page/'.$pages);
-				exit;	
-	 		}
 
-	 	}else{
+			 	if($_POST)
+			 	{
+			 		//글 수정 POST 전송 시
+			 		
+			 	
 
-			// GET 방식일 경우 게시물 내용 가져 오기
-	 		$data['views']=$this->board_m->get_view($this->uri->segment(4));
 
-	 		//쓰기 폼 view 호출
-	 		$this->load->view('board/modify_v', $data);
-	 	}
+			 		if(!$this->input->post('subject', TRUE) OR !$this->input->post('contents', TRUE))
+			 		{
+			 			//글 내용이 없을 경우, 프로그램단에서 한 번 더 체크
+			 			alert('비정상적인 접근입니다.', '/todo/board/view/'.$this->uri->segment(3));
+						exit;	
+			 		}
+
+			 		//var_dumbp($_POST)
+			 		$modify_data=array(
+			 				'table' =>'ci_board',
+			 				'board_id'=>$this->uri->segment(4), //게시물 번호
+			 				'subject' =>$this->input->post('subject', TRUE),
+			 				'contents' =>$this->input->post('contents', TRUE)
+			 		);
+
+		/*	 		foreach ($modify_data as $key => $value) {
+			 			echo $value;	# code...
+			 		};
+			 		
+			 		exit;*/
+
+			 		$result=$this->board_m->modify_board($modify_data);
+
+			 		if($result)
+			 		{
+			 			//글 작성 성공 시 게시물 목록으로
+			 			alert('수정되 었습니다.', '/todo/board/lists/ci_board/page/'.$pages);
+						exit;	
+			 		}
+			 		else
+			 		{
+			 			//글 수정 실패 시 글 내용으로
+			 			alert('다시 수정 해 주세요.', '/todo/board/lists/ci_board/page/'.$pages);
+						exit;	
+			 		}
+
+			 	}else{
+
+					// GET 방식일 경우 게시물 내용 가져 오기
+			 		$data['views']=$this->board_m->get_view($this->uri->segment(4));
+
+			 		//쓰기 폼 view 호출
+			 		$this->load->view('board/modify_v', $data);
+			 	}
+
+
+		}
+		else{
+
+			alert('로그인 후 수정하세요.' , '/todo/auth/login/');
+			exit;
+		}
+
+
+
+
+
+
 	 }
 
 
