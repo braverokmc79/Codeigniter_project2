@@ -420,25 +420,47 @@ class Board extends CI_Controller {
 
 		//경고창 헬퍼 로딩
 		$this->load->helper('alert');
-
-		//게시물 번호에 해당하는 게시물 삭제
-		$return=$this->board_m->delete_content('ci_board',$this->uri->segment(4));
-
 		$pages=$this->_pageNumber();
-		//게시물 목록으로 돌아가기
-		if($return)
-		{
-			//삭제가 성공한 경우
-			alert('삭제 되었습니다.', '/todo/board/lists/ci_board/page/'.$pages);
-			exit;	
-		}	
-		else
-		{
-			//삭제가 실패한 경우
-			alert('삭제 실패하였습니다.', '/todo/board/lists/ci_board/page/'.$pages);
-			exit;	
+				//게시물 목록으로 돌아가기
 
+		if(@$this->session->userdata('logged_in')==TRUE)
+		{	
+
+
+			//삭제하려는 글의 작성자가 본인이지 검증
+			$writer_id=$this->board_m->writer_check();
+			if($writer_id->user_id != $this->session->userdata('username'))
+			{
+				alert('본인이 작성한 글이 아닙니다.', '/todo/board/view/'.$this->uri->segment(4).'/ci_board/page/'.$this->uri->segment(7));
+				exit;
+			}
+
+				//게시물 번호에 해당하는 게시물 삭제
+				$return=$this->board_m->delete_content('ci_board',$this->uri->segment(4));
+
+			
+				if($return)
+				{
+					//삭제가 성공한 경우
+					alert('삭제 되었습니다.', '/todo/board/lists/ci_board/page/'.$pages);
+					exit;	
+				}	
+				else
+				{
+					//삭제가 실패한 경우
+					alert('삭제 실패하였습니다.', '/todo/board/lists/ci_board/page/'.$pages);
+					exit;	
+
+				}
+
+
+
+		}else
+		{
+			alert('로그인 후 삭제 하세요', '/todo/auth/login/');
+			exit;
 		}
+
 	}
 
 
