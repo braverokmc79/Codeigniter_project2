@@ -87,7 +87,7 @@ class Board_m extends CI_Model
 	{
 		$insert_array= array(
 			'board_pid' => 0, //원글이라 0을 입력, 댓글일 경우 번호 입력
-			'user_id' =>'braverokm', 
+			'user_id' =>$arrays['user_id'], 
 			'user_name' =>'마카로닉스',
 			'subject'=>$arrays['subject'],
 			'contents'=>$arrays['contents'],

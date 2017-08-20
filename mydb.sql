@@ -78,13 +78,13 @@ INSERT INTO USERS ( username, password, name, email, reg_date)
 DROP TABLE IF EXISTS `ci_sessions`;
 CREATE TABLE IF NOT EXISTS `ci_sessions` (
   `id` varchar(200) not null default '0',
-  `session_id` BIGINT AUTO_INCREMENT ,
   `ip_address` varchar(16) NOT NULL DEFAULT '0',
   `user_agent` varchar(120) NOT NULL,
   `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_data` text NOT NULL,
-  `timestamp` TIMESTAMP ,
   `data` TEXT,
-  PRIMARY KEY (`session_id`),
+  `timestamp` DATETIME  DEFAULT  now() ,
+  `regdate` TIMESTAMP  DEFAULT  now(),
+  PRIMARY KEY (`id`),
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

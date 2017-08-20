@@ -12,8 +12,8 @@ class Auth_m extends CI_Model
 		parent::__construct();
 	}
 
-	//아이디 비빌번호 체크
 
+	//아이디 비빌번호 체크
 	function login($auth)
 	{
 		$sql =" select username, email from USERS where username =? and password =?";

@@ -216,68 +216,80 @@ class Board extends CI_Controller {
 	{
 		//폼 검증 라이브러리 로드
 		$this->load->library('form_validation');
-
-		// 폼 검증할 필드와 규칙 사전 정의
-		$this->form_validation->set_rules('subject', '제목', 'required|xss_clean');
-		$this->form_validation->set_rules('contents', '내용', 'required');
-
-
-		//경고창 헬퍼 로딩
 		$this->load->helper('alert');
-		echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-	
-		if($_POST)
+
+		if(@$this->session->userdata('logged_in')==TRUE)
 		{
-			
 
-				//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
-/*				$uri_array = $this->segment_explode($this->uri->uri_string());
+			// 폼 검증할 필드와 규칙 사전 정의
+			$this->form_validation->set_rules('subject', '제목', 'required|xss_clean');
+			$this->form_validation->set_rules('contents', '내용', 'required');
 
-				if( in_array('page', $uri_array) )
+
+			//경고창 헬퍼 로딩
+			$this->load->helper('alert');
+			echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+		
+			if($_POST)
+			{
+				
+
+					//주소중에서 page 세그먼트가 있는지 검사하기 위해 주소를 배열로 변환
+	/*				$uri_array = $this->segment_explode($this->uri->uri_string());
+
+					if( in_array('page', $uri_array) )
+					{
+						$pages = urldecode($this->url_explode($uri_array, 'page'));
+					}
+					else
+					{
+						$pages = 1;
+					}
+					*/
+
+
+				if(!$this->input->post('subject', TRUE) OR !$this->input->post('contents', TRUE))
 				{
-					$pages = urldecode($this->url_explode($uri_array, 'page'));
+					//글 내용이 없을 경우, 프로그램단에서 한 번 더 체크
+					
+					alert('비정상적인 접근입니다.', '/todo/board/view/'.$this->uri->segment(3));
+					exit;
+				}
+
+				$write_data=array(
+
+						'subject'=>$this->input->post('subject', TRUE),
+						'contents'=>$this->input->post('contents', TRUE),
+						'table' =>'ci_board',
+						'user_id'=>$this->session->userdata('username')
+				);
+
+				$result =$this->board_m->insert_board($write_data);
+
+				if($result)
+				{
+					//글 작성 성공시 게시판 목록으로
+					alert('입력되었습니다.', '/todo/board/lists/');
+					exit;
 				}
 				else
 				{
-					$pages = 1;
+					//글 실패 시 게시물 목록으로 
+					alert('다시 입력해 주세요.', '/todo/board/lists/');
+					exit;
 				}
-				*/
-
-
-			if(!$this->input->post('subject', TRUE) OR !$this->input->post('contents', TRUE))
-			{
-				//글 내용이 없을 경우, 프로그램단에서 한 번 더 체크
-				
-				alert('비정상적인 접근입니다.', '/todo/board/view/'.$this->uri->segment(3));
-				exit;
-			}
-
-			$write_data=array(
-
-					'subject'=>$this->input->post('subject', TRUE),
-					'contents'=>$this->input->post('contents', TRUE),
-					'table' =>'ci_board'
-			);
-
-			$result =$this->board_m->insert_board($write_data);
-
-			if($result)
-			{
-				//글 작성 성공시 게시판 목록으로
-				alert('입력되었습니다.', '/todo/board/lists/');
-				exit;
 			}
 			else
 			{
-				//글 실패 시 게시물 목록으로 
-				alert('다시 입력해 주세요.', '/todo/board/lists/');
-				exit;
+				//쓰기 폼 view 호출
+				$this->load->view('board/write_v');
 			}
+
 		}
 		else
 		{
-			//쓰기 폼 view 호출
-			$this->load->view('board/write_v');
+			alert('로그인 후 작성하세요', '/todo/auth/login');
+			exit;
 		}
 	}
 
