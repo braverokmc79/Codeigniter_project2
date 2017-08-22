@@ -23,9 +23,18 @@
 				<?php echo $lt->board_id; ?>
 			</th>
 			<td>
+	<?php 
+		if(is_null($this->uri->segment(4))){
+			echo "<a href='/todo/board/view/".$lt->board_id."/ci_board/page/1' >";
+		}
+		else{
+
+		
+	 ?>
 	<a rel="external" 
 	href="/todo/<?php echo $this->uri->segment(1);?>/view/<?php  echo $lt->board_id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>/<?php echo $this->uri->segment(5);?>" >
 
+	<?php } ?>
 			<?php echo $lt->subject; ?></a></td>
 			<td><?php echo  $lt->user_name; ?></td>
 			<td><?php echo $lt->hits; ?></td>

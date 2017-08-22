@@ -20,7 +20,7 @@ class Board_m extends CI_Model
 		if($search_word !='')
 		{
 			//검색어가 있을 경우의 처리;
-			$sword =' where subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
+			$sword =' and subject like "%'.$search_word.'%" or contents like "%'.$search_word.'%" ';
 		}
 
 
@@ -39,7 +39,7 @@ class Board_m extends CI_Model
 			$limit_query=' LIMIT '. $offset .', '. $limit ;
 		}
 
-		$sql ="select * from ".$table.$sword." order by board_id desc ".$limit_query ;
+		$sql ="select * from  ".$table. " where  board_pid =0". $sword."   order by board_id desc ".$limit_query ;
 
 
 		//$sql="SELECT * FROM $table order by board_id desc ";
@@ -142,6 +142,51 @@ class Board_m extends CI_Model
 		return $query->row();
 
 	}
+
+
+
+
+
+	//댓글 입력
+	function insert_comment($arrays)
+	{
+		$insert_array=array(
+			'board_pid' =>$arrays['board_pid'], //원글 번호 입력
+			'user_id' =>$arrays['user_id'],
+			'user_name'	=>$arrays['user_id'],
+			'subject'=>$arrays['subject'],
+			'contents'=>$arrays['contents'],
+			'reg_date'=>date("Y-m-d H:i:s")
+		);
+
+		$this->db->insert($arrays['table'], $insert_array);
+
+
+		//******  이 구문은 최근에 입력된 번호를 반환합니다.
+		$board_id=$this->db->insert_id();
+
+		//결과 반환
+		return $board_id;
+	}
+
+
+
+	// 댓글 리스트를 화면에 출력하기 위해 리스트를 가져오는 함수입니다.
+	function get_comment($table, $id)
+	{
+		$sql=" select * from ci_board where board_pid =? order by board_id desc ";
+		$query=$this->db->query($sql , array( 
+				'0'=>$id
+				)
+		);
+
+		//댓글 리스트 반환
+		$result=$query->result();
+		return $result;
+	}
+
+
+
 
 }
 

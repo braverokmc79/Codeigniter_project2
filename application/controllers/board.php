@@ -66,8 +66,6 @@ class Board extends CI_Controller {
 		//페이지네이션 라이브러리 로딩 추가
 		$this->load->library('pagination');
 
-
-
 		$config=$this->pageConfig($page_url, $search_word);
 
 
@@ -95,6 +93,7 @@ class Board extends CI_Controller {
 		$data['list']=$this->board_m->get_list($this->uri->segment(3), '' , $start, $limit, $search_word);
 		$this->load->view('board/list_v', $data);
 	}
+
 
 
 
@@ -203,6 +202,15 @@ class Board extends CI_Controller {
 	{
 		//게시판 이름과 게시물 번호에 해당하는 게시물 가져오기
 		$data['views']=$this->board_m->get_view($this->uri->segment(3));
+
+
+		//게시판 이름과 게시물 번호 해당하는 댓글 리스트 가져오기
+		$table=$this->uri->segment(4);
+		$board_id=$this->uri->segment(3);
+
+		$data['comment_list']=$this->board_m->get_comment($table, $board_id);
+
+
 		//view 호출
 		$this->load->view('board/view_v', $data);
 	}
