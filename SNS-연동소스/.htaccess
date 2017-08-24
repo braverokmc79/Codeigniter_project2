@@ -1,0 +1,18 @@
+<IfModule mod_url.c>
+    checkURL On
+    ServerEncoding EUC-KR
+    ClientEncoding UTF-8
+</IfModule>
+php_flag register_globals on
+php_flag register_long_arrays on
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+	RewriteBase /
+
+	RewriteCond $1 !^(index\.php?|images|captcha|include)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+
+	RewriteRule ^(.*)$ /index.php/$1 [L]
+</IfModule>
