@@ -84,15 +84,10 @@
 			
 			<td>{2}</td>
 
-			<td><a href="">삭제</a></td>
+			<td><a href="javascript:comment_delete({3})";>삭제</a></td>
 		</tr>
 
 </script>
-
-
-
-
-
 
 
 
@@ -196,7 +191,7 @@ function onSuccess2(data2, status){
 
 	var template='<table cellspacing="0" cellpadding="0" class="table table-striped" id="comment_table">';
 	for(var i=0; i< data.length; i++){
-	  template +=answerTemplate.format(data[i].user_id, data[i].contents,  data[i].reg_date);		  
+	  template +=answerTemplate.format(data[i].user_id, data[i].contents,  data[i].reg_date, data[i].board_id);		  
 	}
 	template +="</table>";
 	$("#comment_area").html(template);
@@ -210,5 +205,35 @@ String.prototype.format = function() {
         formatted = formatted.replace(regexp, arguments[i]);
     }
     return formatted;
+}
+
+
+function comment_delete(boardId){
+
+	$.ajax({
+		url:"/todo/ajax_board/ajax_comment_delete",
+		type:"POST",
+		data:{
+			"csrf_test_name" :getCookie('csrf_cookie_name'),
+			'table':'ci_board',
+			'board_id':boardId,
+			'board_pid':'<?php echo $this->uri->segment(3); ?>'
+		},
+		dataType:"text",
+		success:function(data, status){
+
+			alert('삭제 했습니다.');
+			onSuccess2(data,status);
+
+		},
+		error:function(data){
+			alert("삭제에 실패 했습니다.");
+		}
+
+	});
+
 }		
 </script>
+
+
+

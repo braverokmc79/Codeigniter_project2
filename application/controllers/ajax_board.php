@@ -77,7 +77,6 @@ class Ajax_board extends CI_Controller{
 					echo "글 작성에 실패 하였습니다.";
 				}
 
-
 			}
 			else
 			{
@@ -91,6 +90,48 @@ class Ajax_board extends CI_Controller{
 			//로그인 필요 에러
 			echo "로그인하여야 합니다.";
 			
+		}
+	}
+
+
+	public function ajax_comment_delete()
+	{
+		if(@$this->session->userdata('logged_in')==TRUE)
+		{
+			 $this->load->model('board_m');
+
+			 $table=$this->input->post('table', TRUE);
+			 $board_id=$this->input->post('board_id',TRUE);
+			 $board_pid=$this->input->post('board_pid', TRUE);
+
+			 //글 작성작가 본인인지 검증
+			 $writer_id=$this->board_m->ajax_writer_check($board_id);
+
+			 if($writer_id->user_id != $this->session->userdata('username'))
+			 {
+			 	echo "본인이 작성한 글이 아닙니다.";
+			 }
+			 else
+			 {
+			 	$result=$this->board_m->delete_content('ci_board' ,$board_id);
+
+			 	if($result)
+			 	{
+
+			 		//삭제 성공시 데이터 리스트 
+			 		echo json_encode($this->board_m->get_comment('ci_board' , $board_pid));
+			 	}
+			 	else
+			 	{
+			 		echo "삭제에 실패 하였습니다.";
+			 	}
+
+			 }
+
+		}
+		else
+		{
+			echo "로그인하여여 합니다.";
 		}
 	}
 

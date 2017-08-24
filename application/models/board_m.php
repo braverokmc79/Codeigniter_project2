@@ -137,8 +137,10 @@ class Board_m extends CI_Model
 
 	function writer_check()
 	{
+
+		$id=$this->uri->segment(4);
 		$sql=" select user_id from CI_BOARD where board_id = ?" ;
-		$query=$this->db->query($sql, array('board_id'=>$this->uri->segment(4)));
+		$query=$this->db->query($sql, array('board_id'=>$id));
 		return $query->row();
 
 	}
@@ -175,16 +177,20 @@ class Board_m extends CI_Model
 	function get_comment($table, $id)
 	{
 		$sql=" select * from ci_board where board_pid =? order by board_id desc ";
-		$query=$this->db->query($sql , array( 
-				'0'=>$id
-				)
-		);
+		$query=$this->db->query($sql , array( '0'=>$id));
 
 		//댓글 리스트 반환
 		$result=$query->result();
 		return $result;
 	}
 
+
+	//댓글 삭제
+	function ajax_writer_check($board_id){
+		$sql="select user_id from ci_board where board_id= ?";
+		$query=$this->db->query($sql,  array( '0' => $board_id));
+		return $query->row();
+	}
 
 
 

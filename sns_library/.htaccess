@@ -1,0 +1,13 @@
+
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+	RewriteBase /
+
+	RewriteCond $1 !^(index\.php|assets|images|captcha|data|include|uploads|robots\.txt)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+
+	RewriteRule ^(.*)$ /todo/index.php/$1 [L]
+</IfModule>

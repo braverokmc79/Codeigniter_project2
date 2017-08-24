@@ -1,0 +1,130 @@
+/* =============================================================================
+   ### Common
+   ========================================================================== */
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+
+.nanum-g { font-family: 'Nanum Gothic'; }
+.nanum-b { font-family: 'Nanum Brush Script'; }
+.nanum-gc { font-family: 'Nanum Gothic Coding'; }
+.nanum-m { font-family: 'Nanum Myeongjo';  }
+.nanum-p { font-family: 'Nanum Pen Script'; }
+
+
+
+
+/* Margin */
+.mg0 {margin:0!important;}
+.mb0 {margin-bottom:0!important;}
+.mb10 {margin-bottom:10px!important;}
+.mb30 {margin-bottom:30px!important;}
+.mt0 {margin-top:0!important;}
+.mt1 {margin-top:1px!important;}
+.mt5 {margin-top:5px!important;}
+.mt10 {margin-top:10px!important;}
+.mt18 {margin-top:18px!important;}
+.mt20 {margin-top:20px!important;}
+.mt25 {margin-top:25px!important;}
+.mt30 {margin-top:30px!important;}
+.mt50 {margin-top:50px!important;}
+.mt70 {margin-top:70px!important;}
+.ml5 {margin-left:5px!important;}
+.ml10 {margin-left:10px!important;}
+.ml15 {margin-left:15px!important;}
+.ml20 {margin-left:20px!important;}
+.ml30 {margin-left:30px!important;}
+.ml40 {margin-left:40px!important;}
+.ml45 {margin-left:45px!important;}
+.ml50 {margin-left:50px!important;}
+.ml55 {margin-left:55px!important;}
+.ml65 {margin-left:65px!important;}
+.ml100 {margin-left:100px!important;}
+.ml140 {margin-left:140px!important;}
+.ml190 {margin-left:190px!important;}
+.ml300 {margin-left:300px!important;}
+.mr0 {margin-right:0!important;}
+.mr5 {margin-right:5px!important;}
+.mr10 {margin-right:10px!important;}
+.mr15 {margin-right:15px!important;}
+.mr20 {margin-right:20px!important;}
+.mr30 {margin-right:30px!important;}
+/* Padding */
+.pd0 {padding:0!important;}
+.pl0 {padding-left:0!important;}
+.pr0 {padding-right:0!important;}
+.pl10 {padding-left:10px!important;}
+.pl20 {padding-left:20px!important;}
+.pl30 {padding-left:30px!important;}
+.pl40 {padding-left:40px!important;}
+.pr5 {padding-right:5px!important;}
+.pr10 {padding-right:10px!important;}
+.pr20 {padding-right:20px!important;}
+.pr45 {padding-right:45px!important;}
+.pr100 {padding-right:100px!important;}
+.pb0 {padding-bottom:0px!important;}
+.pb20 {padding-bottom:20px!important;}
+.pt10 {padding-top:10px!important;}
+.pb30 {padding-bottom:30px!important;}
+/* Width + height */
+.w30 {width:30px!important;}
+.w40 {width:40px!important;}
+.w50 {width:50px!important;}
+.w60 {width:60px!important;}
+.w70 {width:70px!important;}
+.w100 {width:100px!important;}
+.w122 {width:122px!important;}
+.w130 {width:130px!important;}
+.w137 {width:137px!important;}
+.w140 {width:140px!important;}
+.w150 {width:150px!important;}
+.w160 {width:160px!important;}
+.w153 {width:153px!important;}
+.w175 {width:175px!important;}
+.w180 {width:180px!important;}
+.w210 {width:210px!important;}
+.w220 {width:220px!important;}
+.w240 {width:240px!important;}
+.w250 {width:250px!important;}
+.w280 {width:280px!important;}
+.w290 {width:290px!important;}
+.w320 {width:320px!important;}
+.w300 {width:300px!important;}
+.w350 {width:350px!important;}
+.w380 {width:380px!important;}
+.w390 {width:390px!important;}
+.w400 {width:400px!important;}
+.w430 {width:430px!important;}
+.w450 {width:450px!important;}
+.w520 {width:520px!important;}
+.w540 {width:540px!important;}
+.w550 {width:550px!important;}
+.w600 {width:600px!important;}
+.w625 {width:625px!important;}
+.w630 {width:630px!important;}
+.w635 {width:635px!important;}
+.w705 {width:705px!important;}
+.w736 {width:736px!important;}
+.w745 {width:745px!important;}
+.w740 {width:740px!important;}
+.w760 {width:760px!important;}
+.w845 {width:845px!important;}
+.w970 {width:970px!important;}
+.h40 {height:40px!important;}
+.h160 {height:160px!important;}
+.h445 {height:445px!important;}
+.h590 {height:590px!important;}
+.h100 {height:100%!important;}
+
+
+.btn_kakao {
+    width:300px; 
+    height:49px; 
+    background-image: url('/assets/img/btn_kakao.png'); 
+    margin-top:5px;
+    display:block;
+}
+.btn_kakao:hover {background-image: url('/assets/img/btn_kakao_ov.png');}
